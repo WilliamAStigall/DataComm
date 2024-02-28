@@ -42,15 +42,16 @@ print(f"Correlation between Defensive Rating and Wins (cleaned data): {drtg_win_
 #Correlation between Defensive Rating and Wins (cleaned data): -0.5139528802382525
 
 # Create a contingency table
-contingency_table = pd.crosstab(df['three_point_outcome'], df['game_outcome'])
+contingency_table = pd.crosstab(df['3p'], df['won'])
 
 # Perform Chi-Square test
 chi2, p, dof, expected = stats.chi2_contingency(contingency_table)
 
 print(f"Chi-Square Statistic: {chi2}, p-value: {p}")
 
+df_non_nan['fg_percentage'] = (df_non_nan['fg'] / df_non_nan['fga']) * 100
 # Perform two-way ANOVA
-model = ols('fga ~ C(home) * C(won)', data=df).fit()
+model = ols('fg_percentage ~ C(home) * C(won)', data=df).fit()
 anova_results = sm.stats.anova_lm(model, typ=2)
 
 print(anova_results)
