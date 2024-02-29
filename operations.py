@@ -9,7 +9,8 @@ import seaborn as sns
 
 
 
-df = pd.read_csv("nba_games.csv")
+
+df = pd.read_csv("nba_games_training.csv")
 
 # Count NaN values in the 'ortg' and 'won' columns
 nan_count_ortg = df['ortg'].isna().sum()
@@ -80,4 +81,17 @@ plt.show()
 plt.figure(figsize=(10, 8))
 sns.histplot(data=df_non_nan, x='ortg', hue='won', kde=True, element="step", stat="density", common_norm=False)
 plt.title('Distribution of Offensive Rating by Win/Loss')
+plt.show()
+
+
+df_wins = df[df.won == True]
+df_loses = df[df.won == False]
+
+print(df_wins['pts'].mean())
+print(df_loses['pts'].mean())
+
+print(df.describe())
+
+df['3p'].hist()
+plt.title("Histogram of 3 pointers made")
 plt.show()
