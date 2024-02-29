@@ -49,21 +49,7 @@ chi2, p, dof, expected = stats.chi2_contingency(contingency_table)
 
 print(f"Chi-Square Statistic: {chi2}, p-value: {p}")
 
-df_non_nan['fg_percentage'] = (df_non_nan['fg'] / df_non_nan['fga']) * 100
-# Perform two-way ANOVA
-model = ols('fg_percentage ~ C(home) * C(won)', data=df).fit()
-anova_results = sm.stats.anova_lm(model, typ=2)
 
-print(anova_results)
-
-# Logistic Regression
-X = df_non_nan[['stat1', 'stat2', 'statN']]  # Replace with actual stat columns
-y = df_non_nan['win_loss']
-
-X = sm.add_constant(X)  # Adds a constant term to the predictors
-logit_model = sm.Logit(y, X).fit()
-
-print(logit_model.summary())
 
 
 
@@ -78,14 +64,14 @@ plt.show()
 
 # Plot 2: Boxplot of Field Goal Attempts (FGA) by Home/Away and Win/Loss
 plt.figure(figsize=(10, 8))
-sns.boxplot(x='home', y='fga', hue='won', data=df)
-plt.title('Field Goal Attempts by Home/Away and Win/Loss')
+sns.boxplot(x='home', y='fg', hue='won', data=df)
+plt.title('Field Goals Made by Home/Away and Win/Loss')
 plt.show()
 
 # Plot 3: Count Plot for Three-Point Outcome by Game Outcome
 plt.figure(figsize=(10, 8))
-sns.countplot(x='three_point_outcome', hue='game_outcome', data=df)
-plt.title('Three-Point Outcome by Game Result')
+sns.countplot(x='3p', hue='won', data=df)
+plt.title('Three pointers made by game won')
 plt.show()
 
 # Assuming 'stat1', 'stat2', 'statN' are placeholders, replace them with actual column names for the regression
