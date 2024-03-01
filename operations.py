@@ -1,20 +1,25 @@
 import pandas as pd
 import numpy as np
 import scipy.stats as stats
-import statsmodels.api as sm
-from statsmodels.formula.api import ols
 import matplotlib.pyplot as plt
 import seaborn as sns
+from tabulate import tabulate
+
 
 
 
 
 
 df = pd.read_csv("nba_games_training.csv")
-
+df.drop(columns=['season','date','team'],axis=1,inplace=True)
 # Count NaN values in the 'ortg' and 'won' columns
 nan_count_ortg = df['ortg'].isna().sum()
 nan_count_won = df['won'].isna().sum()
+print(df.describe())
+full_describe = df.describe().T
+
+table_str = tabulate(full_describe,headers='key',tablefmt='pretty')
+print(table_str)
 
 print(f"Number of NaN values in 'ortg': {nan_count_ortg}")
 print(f"Number of NaN values in 'won': {nan_count_won}")
@@ -95,3 +100,8 @@ print(df.describe())
 df['3p'].hist()
 plt.title("Histogram of 3 pointers made")
 plt.show()
+
+df['3p'].hist()
+plt.title('Histogram of 3 Pointers Made')
+plt.savefig("3p_hist")
+
